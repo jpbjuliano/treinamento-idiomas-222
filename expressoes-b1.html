@@ -6,6 +6,7 @@
   <meta name="description" content="Painel de expressões frequentes e úteis para preparação no nível B1, com filtros e acompanhamento de revisão.">
   <title>Expressões B1 | Treinamento Idiomas</title>
   <link rel="stylesheet" href="assets/css/expressoes-b1.css?v=20260915-1">
+  <link rel="stylesheet" href="assets/css/revisao-b1.css?v=20260915-1">
 </head>
 <body>
   <header class="topbar">
@@ -67,6 +68,56 @@
         <strong id="statReview">0</strong>
         <small>prioridade</small>
       </article>
+    </section>
+
+    <section class="quick-review" aria-labelledby="quickReviewTitle">
+      <div class="quick-review-heading">
+        <div>
+          <p class="eyebrow">Treino ativo</p>
+          <h2 id="quickReviewTitle">Revisão rápida em cartões</h2>
+          <p>Escolha uma trilha. A sessão mostra até 10 expressões em ordem aleatória: tente lembrar o significado antes de revelar a resposta e atualize seu domínio durante a própria revisão.</p>
+        </div>
+      </div>
+
+      <div class="quick-review-modes" aria-label="Modos de revisão rápida">
+        <button class="review-mode-button primary" type="button" data-review-mode="review">Preciso revisar</button>
+        <button class="review-mode-button" type="button" data-review-mode="doubt">Tenho dúvida</button>
+        <button class="review-mode-button" type="button" data-review-mode="essential">Essenciais</button>
+        <button class="review-mode-button" type="button" data-review-mode="all">Misturar tudo</button>
+      </div>
+
+      <div id="reviewEmpty" class="review-empty" hidden></div>
+
+      <div id="reviewWorkspace" class="review-workspace" hidden>
+        <div class="review-progress">
+          <span id="reviewSessionLabel">Sessão</span>
+          <strong id="reviewPosition">1 de 10</strong>
+        </div>
+        <article class="review-card">
+          <div class="review-meta">
+            <span id="reviewCategory" class="review-chip"></span>
+            <span id="reviewPriority" class="review-chip"></span>
+          </div>
+          <h3 id="reviewExpression"></h3>
+
+          <div id="reviewAnswer" class="review-answer" hidden>
+            <div id="reviewTranslation" class="review-translation"></div>
+            <div class="review-example">
+              <strong id="reviewExample"></strong>
+              <small id="reviewExamplePt"></small>
+            </div>
+            <p class="review-tip"><strong>Na prova:</strong> <span id="reviewTip"></span></p>
+          </div>
+
+          <div class="review-actions">
+            <button id="reviewReveal" class="review-action reveal" type="button">Mostrar resposta</button>
+            <button class="review-action known" type="button" data-review-status="known" aria-pressed="false">Conheço</button>
+            <button class="review-action doubt" type="button" data-review-status="doubt" aria-pressed="false">Tenho dúvida</button>
+            <button class="review-action review" type="button" data-review-status="review" aria-pressed="false">Preciso revisar</button>
+            <button id="reviewNext" class="review-action next" type="button">Próxima →</button>
+          </div>
+        </article>
+      </div>
     </section>
 
     <section class="control-panel" aria-labelledby="filtersTitle">
@@ -148,5 +199,6 @@
   </footer>
 
   <script src="assets/js/expressoes-b1.js?v=20260915-1"></script>
+  <script src="assets/js/revisao-b1.js?v=20260915-1"></script>
 </body>
 </html>
