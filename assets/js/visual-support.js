@@ -3,18 +3,13 @@
     const number = index + 1;
     return {
       id: `ca${String(number).padStart(2, "0")}`,
-      index,
+      row: Math.floor(index / 5) + 1,
+      column: index % 5,
       alt: `Card visual de memorização da questão CA${String(number).padStart(2, "0")}.`
     };
   });
 
-  function spritePosition(index) {
-    const column = index % 5;
-    const row = Math.floor(index / 5);
-    const x = column === 4 ? 100 : column * 25;
-    const y = row === 3 ? 100 : row * (100 / 3);
-    return `${x}% ${y}%`;
-  }
+  const columnPosition = column => `${column * 25}% 50%`;
 
   function decorateCard(card, visual) {
     if (!card || card.dataset.visualSupport === "ready") return;
@@ -44,7 +39,8 @@
 
     const image = document.createElement("div");
     image.className = "ca-visual-image";
-    image.style.backgroundPosition = spritePosition(visual.index);
+    image.style.backgroundImage = `url('assets/img/audio/ca-row-${visual.row}.webp')`;
+    image.style.backgroundPosition = columnPosition(visual.column);
     figure.appendChild(image);
 
     top.append(info, figure);
