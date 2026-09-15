@@ -27,13 +27,32 @@
 .framework-heading p strong{color:#dce7f7}
 .framework-badge{white-space:nowrap;padding:8px 11px;border-radius:999px;border:1px solid rgba(125,211,252,.32);background:rgba(125,211,252,.08);color:var(--accent-2);font-size:.76rem;font-weight:800}
 
-.ca-visual-top{display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:22px;align-items:start;margin-bottom:14px}
+.ca-visual-top{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:20px;align-items:start;margin-bottom:14px}
 .ca-visual-info{min-width:0}
 .ca-visual-info .question-title{margin-top:14px;margin-bottom:0}
-.ca-visual-card{margin:0;width:180px;aspect-ratio:1/1;overflow:hidden;border:1px solid #315176;border-radius:14px;background:#0b1525;box-shadow:0 10px 24px rgba(0,0,0,.18)}
-.ca-visual-image{width:100%;height:100%;display:block;background-repeat:no-repeat;background-size:500% 100%;background-position:0 50%}
+.ca-visual-card{margin:0;width:190px;aspect-ratio:3/2;overflow:hidden;border:1px solid #315176;border-radius:14px;background:#0b1525;box-shadow:0 10px 24px rgba(0,0,0,.18)}
+.ca-visual-image{width:100%;height:100%;display:block}
+.ca-visual-image svg{display:block;width:100%;height:100%}
 .question-card[data-visual-support="ready"]>.options{margin-top:4px}
 
-@media (max-width:900px){.ca-visual-top{grid-template-columns:minmax(0,1fr) 170px}.ca-visual-card{width:170px}}
-@media (max-width:700px){.framework-heading{flex-direction:column}.framework-badge{white-space:normal}.knowledge-framework{padding:16px}.ca-visual-top{grid-template-columns:1fr;gap:14px}.ca-visual-card{width:min(100%,220px);justify-self:start}.ca-visual-info .question-title{margin-bottom:4px}}
-@media (max-width:620px){.bank-summary{align-items:flex-start;flex-direction:column}.diagnostic-row{grid-template-columns:minmax(0,1fr) auto}.diagnostic-row small{grid-column:2}.track-legend span{font-size:.76rem}}
+@media (max-width:900px){
+  .ca-visual-top{grid-template-columns:minmax(0,1fr) 170px}
+  .ca-visual-card{width:170px}
+}
+
+@media (max-width:700px){
+  .framework-heading{flex-direction:column}
+  .framework-badge{white-space:normal}
+  .knowledge-framework{padding:16px}
+  .ca-visual-top{display:flex;flex-direction:column;gap:12px;align-items:stretch}
+  .ca-visual-info{width:100%}
+  .ca-visual-card{width:168px;max-width:52vw;aspect-ratio:3/2;align-self:center;justify-self:center;margin:4px auto 8px}
+  .ca-visual-info .question-title{margin-bottom:4px}
+}
+
+@media (max-width:620px){
+  .bank-summary{align-items:flex-start;flex-direction:column}
+  .diagnostic-row{grid-template-columns:minmax(0,1fr) auto}
+  .diagnostic-row small{grid-column:2}
+  .track-legend span{font-size:.76rem}
+}
