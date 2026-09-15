@@ -1,0 +1,166 @@
+TREINAMENTO IDIOMAS 222
+TRANSCRIÇÕES DOS ÁUDIOS — COMPREENSÃO AUDITIVA (CA)
+Banco atual: CA01 a CA20
+
+======================================================================
+CA01 — B1
+Descritor: informação específica
+Categoria: horário e motivo
+Idioma: en-US
+
+Good morning, Mr. Parker. The doctor is running about twenty minutes late because of an emergency. You can wait here, or if you prefer, you may return at ten fifteen. We apologize for the delay.
+
+======================================================================
+CA02 — B1–B2
+Descritor: contraste / mudança de plano
+Categoria: viagem
+Idioma: en-US
+
+I was planning to drive to Porto Alegre on Friday evening, but my car needs repairs. So I bought a bus ticket for Saturday morning instead. I should arrive before lunch.
+
+======================================================================
+CA03 — B2
+Descritor: finalidade
+Categoria: trabalho
+Idioma: en-GB
+
+Please send me the updated figures before noon. I have a meeting with the director at two o'clock, and I want enough time to review the report before I present it.
+
+======================================================================
+CA04 — B2
+Descritor: inferência
+Categoria: evento e clima
+Idioma: en-US
+
+The weather forecast says heavy rain will start this afternoon. The outdoor ceremony is still scheduled for four, but the organizers have prepared the gym in case the conditions get worse.
+
+======================================================================
+CA05 — B1
+Descritor: sequência
+Categoria: instruções
+Idioma: en-GB
+
+After you arrive at the training center, report to the front desk first. They will check your identification and give you a visitor badge. Only then should you go to room twelve for the briefing.
+
+======================================================================
+CA06 — B1
+Descritor: ideia principal
+Categoria: anúncio
+Idioma: en-US
+
+The city library has extended its opening hours during exam week. From Monday to Thursday, students may use the study rooms until eleven p.m. The change is temporary and normal hours will return next Monday.
+
+======================================================================
+CA07 — B2
+Descritor: atitude do falante
+Categoria: serviço
+Idioma: en-GB
+
+I expected the hotel room to be small, but I was pleasantly surprised. It was quiet, the desk was large enough to work at, and the staff solved a problem with the internet within minutes. I would definitely stay there again.
+
+======================================================================
+CA08 — B2
+Descritor: opinião
+Categoria: treinamento
+Idioma: en-US
+
+Online courses are useful when people need flexibility, but I do not think they should replace every classroom activity. In practical subjects, learners often benefit from working directly with an instructor and other students.
+
+======================================================================
+CA09 — B1
+Descritor: causa
+Categoria: transporte
+Idioma: en-GB
+
+The eight thirty train has been canceled because of a technical problem. Passengers for Bristol should take the nine ten service from platform four. Tickets for the canceled train remain valid.
+
+======================================================================
+CA10 — B1
+Descritor: números e horário
+Categoria: agenda
+Idioma: en-US
+
+Your appointment is on Thursday, September eighteenth, at three forty-five p.m. Please arrive fifteen minutes early to complete the registration form.
+
+======================================================================
+CA11 — B2
+Descritor: recomendação implícita
+Categoria: estudo
+Idioma: en-GB
+
+If you only read the vocabulary list, you may recognize the words but still struggle to use them. Try putting each new word into a sentence and review those sentences a few days later. That usually makes the vocabulary easier to remember.
+
+======================================================================
+CA12 — B2
+Descritor: contraste
+Categoria: tecnologia
+Idioma: en-US
+
+The new software takes a little longer to start, which some users dislike. However, once it is running, reports are generated much faster and the system crashes far less often than before.
+
+======================================================================
+CA13 — B1
+Descritor: informação específica
+Categoria: ambiente de trabalho
+Idioma: en-US
+
+The safety inspection will begin in the warehouse at nine. Office staff do not need to attend, but everyone working in storage areas must meet the inspector beside the loading entrance five minutes before the inspection starts.
+
+======================================================================
+CA14 — B1
+Descritor: propósito do anúncio
+Categoria: serviço público
+Idioma: en-GB
+
+Due to maintenance, the swimming pool will close at six this evening instead of nine. The gym and café will remain open as usual. We apologize for any inconvenience.
+
+======================================================================
+CA15 — B2
+Descritor: posição do falante
+Categoria: trabalho híbrido
+Idioma: en-US
+
+I like having two days at home because I can concentrate on reports without interruptions. Still, I would not want to work remotely all week. Some decisions are simply easier when the whole team is in the same room.
+
+======================================================================
+CA16 — B2
+Descritor: resultado
+Categoria: incidente
+Idioma: en-GB
+
+We noticed smoke coming from the printer room, so we switched off the power and called building security. It turned out that a small power supply had overheated. No one was injured, and the room reopened later that afternoon.
+
+======================================================================
+CA17 — C1
+Descritor: atitude implícita
+Categoria: projeto
+Idioma: en-GB
+
+At first I thought the deadline was unrealistic, and I still think the planning stage was rushed. Yet the team adapted remarkably well, and the final result is stronger than I expected. I would not choose the same schedule again, though.
+
+======================================================================
+CA18 — C1
+Descritor: relação entre argumentos
+Categoria: mudança organizacional
+Idioma: en-US
+
+People often resist a new procedure because the old one feels familiar, not because the new one is objectively worse. That is why training should explain the reason for the change before focusing on the technical steps. Understanding the purpose can reduce resistance.
+
+======================================================================
+CA19 — B2
+Descritor: detalhe com distratores
+Categoria: reserva
+Idioma: en-GB
+
+I booked the conference room for twenty people, but three guests canceled yesterday. We will keep the same room because the smaller one has no projector, and we need to show a short video at the end of the presentation.
+
+======================================================================
+CA20 — B2
+Descritor: ideia principal
+Categoria: orientação
+Idioma: en-US
+
+When preparing for a listening test, do not panic if you miss one word. Focus on the overall situation and listen for changes introduced by words such as but, however, and instead. Those signals often tell you where the important information is.
+
+======================================================================
+FIM
