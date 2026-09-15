@@ -27,7 +27,12 @@
       <div>
         <p class="eyebrow">Revisão direcionada</p>
         <h1>Treinamento para nível 222</h1>
-        <p class="lead">Pratique compreensão auditiva, leitura e expressão escrita em um ambiente simples, rápido e focado em prova.</p>
+        <p class="lead">Banco original de exercícios organizado por habilidade, descritor e faixa de dificuldade. A referência de formato combina tarefas B1/B2 e questões de desafio, sem copiar provas externas.</p>
+        <div class="track-legend" aria-label="Faixas de treinamento">
+          <span><b>Base</b> B1</span>
+          <span><b>Alvo N2</b> B1–B2</span>
+          <span><b>Desafio</b> B2–C1</span>
+        </div>
       </div>
       <div class="mode-card">
         <label for="modeSelect">Modo</label>
@@ -36,6 +41,15 @@
           <option value="simulation">Simulado</option>
         </select>
         <small id="modeHelp">No treino, a correção aparece após cada resposta.</small>
+
+        <label for="trackSelect" class="secondary-label">Trilha</label>
+        <select id="trackSelect">
+          <option value="target" selected>Alvo N2</option>
+          <option value="base">Base B1</option>
+          <option value="challenge">Desafio B2–C1</option>
+          <option value="all">Banco completo</option>
+        </select>
+        <small id="trackHelp">Prioriza tarefas de dificuldade próxima ao objetivo 222.</small>
       </div>
     </section>
 
@@ -57,7 +71,8 @@
       <div class="panel-heading">
         <div>
           <p class="eyebrow">Compreensão Auditiva</p>
-          <h2>Ouça, identifique a ideia central e marque a resposta.</h2>
+          <h2>Ouça, identifique o sentido e descarte os distratores.</h2>
+          <p class="panel-note">Treino de ideia principal, detalhe, finalidade, atitude, contraste, sequência e inferência.</p>
         </div>
         <span class="pill">máx. 2 reproduções</span>
       </div>
@@ -68,9 +83,10 @@
       <div class="panel-heading">
         <div>
           <p class="eyebrow">Compreensão Leitora</p>
-          <h2>Leia a pergunta primeiro e depois localize a informação no texto.</h2>
+          <h2>Leia a pergunta primeiro e localize a evidência no texto.</h2>
+          <p class="panel-note">Treino de mensagens curtas, textos longos, vocabulário em contexto, intenção e inferência.</p>
         </div>
-        <span class="pill">foco em informação + inferência</span>
+        <span class="pill">evidência + inferência</span>
       </div>
       <div id="clContent"></div>
     </section>
@@ -80,8 +96,9 @@
         <div>
           <p class="eyebrow">Expressão Escrita</p>
           <h2>Produza textos claros, organizados e adequados à situação.</h2>
+          <p class="panel-note">Pratique e-mail, relato, opinião, resumo e instruções com checklist antes de revisar.</p>
         </div>
-        <span class="pill">meta de treino: 100–150 palavras</span>
+        <span class="pill">produção guiada</span>
       </div>
       <div id="eeContent"></div>
     </section>
@@ -91,6 +108,7 @@
         <div>
           <p class="eyebrow">Resultado</p>
           <h2>Seu desempenho nesta sessão</h2>
+          <p class="panel-note">Use o diagnóstico por descritor para decidir o que revisar em seguida.</p>
         </div>
       </div>
       <div id="resultContent"></div>
@@ -98,7 +116,7 @@
   </main>
 
   <footer>
-    Material de estudo independente. Não substitui orientações oficiais do CIdEx/Exército Brasileiro.
+    Material de estudo independente. Não substitui orientações oficiais do CIdEx/Exército Brasileiro. Os exercícios são autorais e apenas inspirados em formatos públicos de exames de proficiência.
   </footer>
 
   <script src="data/questions.js"></script>
