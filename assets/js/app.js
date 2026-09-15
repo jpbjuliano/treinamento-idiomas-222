@@ -2,9 +2,9 @@
   const data = window.TRAINING_DATA;
   const state = {
     mode: "training",
+    track: "target",
     answers: {},
     plays: {},
-    startedAt: Date.now(),
     seconds: 0,
     submittedSimulation: false
   };
@@ -14,6 +14,8 @@
     resetBtn: document.getElementById("resetBtn"),
     modeSelect: document.getElementById("modeSelect"),
     modeHelp: document.getElementById("modeHelp"),
+    trackSelect: document.getElementById("trackSelect"),
+    trackHelp: document.getElementById("trackHelp"),
     metricQuestions: document.getElementById("metricQuestions"),
     metricCorrect: document.getElementById("metricCorrect"),
     metricPercent: document.getElementById("metricPercent"),
@@ -27,7 +29,7 @@
   const allObjective = [...data.ca, ...data.cl];
 
   function escapeHtml(value) {
-    return String(value)
+    return String(value ?? "")
       .replaceAll("&", "&amp;")
       .replaceAll("<", "&lt;")
       .replaceAll(">", "&gt;")
@@ -41,24 +43,37 @@
     return `${min}:${sec}`;
   }
 
+  function visibleItems(items) {
+    return state.track === "all" ? items : items.filter(q => (q.track || "target") === state.track);
+  }
+
+  function activeObjective() {
+    return [...visibleItems(data.ca), ...visibleItems(data.cl)];
+  }
+
+  function trackLabel(track = state.track) {
+    return ({base: "Base B1", target: "Alvo N2", challenge: "Desafio B2–C1", all: "Banco completo"})[track] || track;
+  }
+
   setInterval(() => {
     state.seconds += 1;
     el.timer.textContent = formatTime(state.seconds);
   }, 1000);
 
-  function getCorrectCount(items = allObjective) {
+  function getCorrectCount(items = activeObjective()) {
     return items.reduce((sum, q) => sum + (state.answers[q.id] === q.answer ? 1 : 0), 0);
   }
 
-  function getAnsweredCount(items = allObjective) {
+  function getAnsweredCount(items = activeObjective()) {
     return items.filter(q => Number.isInteger(state.answers[q.id])).length;
   }
 
   function updateMetrics() {
-    const answered = getAnsweredCount();
-    const correct = getCorrectCount();
+    const active = activeObjective();
+    const answered = getAnsweredCount(active);
+    const correct = getCorrectCount(active);
     const pct = answered ? Math.round((correct / answered) * 100) : 0;
-    el.metricQuestions.textContent = `${answered}/${allObjective.length}`;
+    el.metricQuestions.textContent = `${answered}/${active.length}`;
 
     if (state.mode === "simulation" && !state.submittedSimulation) {
       el.metricCorrect.textContent = "—";
@@ -69,6 +84,15 @@
     }
   }
 
+  function metaTags(q) {
+    const parts = [q.level || "N2", q.descriptor || q.category || "compreensão"];
+    return `<div class="meta-tags">${parts.map(x => `<span>${escapeHtml(x)}</span>`).join("")}</div>`;
+  }
+
+  function referenceLine(q) {
+    return q.reference ? `<div class="reference-line">Formato de referência: ${escapeHtml(q.reference)}</div>` : "";
+  }
+
   function buildOptions(q, skill) {
     return q.options.map((option, idx) => `
       <button class="option-btn" type="button" data-skill="${skill}" data-id="${q.id}" data-option="${idx}">
@@ -77,10 +101,22 @@
     `).join("");
   }
 
+  function renderBankHeader(skill, visible, total) {
+    return `
+      <div class="bank-summary">
+        <strong>${trackLabel()}</strong>
+        <span>${visible} questões exibidas de ${total} disponíveis em ${skill}</span>
+      </div>
+    `;
+  }
+
   function renderCA() {
-    el.caContent.innerHTML = data.ca.map((q, index) => `
+    const items = visibleItems(data.ca);
+    el.caContent.innerHTML = renderBankHeader("CA", items.length, data.ca.length) + items.map((q, index) => `
       <article class="question-card" id="card-${q.id}">
         <div class="question-meta"><span>Questão ${index + 1}</span><span>${escapeHtml(q.category)}</span></div>
+        ${metaTags(q)}
+        ${referenceLine(q)}
         <div class="audio-row">
           <button class="audio-btn" type="button" data-audio-id="${q.id}">▶ Ouvir</button>
           <span class="audio-status" id="audio-status-${q.id}">0 de 2 reproduções</span>
@@ -93,9 +129,12 @@
   }
 
   function renderCL() {
-    el.clContent.innerHTML = data.cl.map((q, index) => `
+    const items = visibleItems(data.cl);
+    el.clContent.innerHTML = renderBankHeader("CL", items.length, data.cl.length) + items.map((q, index) => `
       <article class="reading-card" id="card-${q.id}">
         <div class="question-meta"><span>Questão ${index + 1}</span><span>${escapeHtml(q.category)}</span></div>
+        ${metaTags(q)}
+        ${referenceLine(q)}
         <div class="reading-text">${escapeHtml(q.passage)}</div>
         <h3 class="question-title">${escapeHtml(q.question)}</h3>
         <div class="options">${buildOptions(q, "cl")}</div>
@@ -107,7 +146,8 @@
   function renderEE() {
     el.eeContent.innerHTML = data.ee.map((item, index) => `
       <article class="writing-card">
-        <div class="question-meta"><span>Proposta ${index + 1}</span><span>produção escrita</span></div>
+        <div class="question-meta"><span>Proposta ${index + 1}</span><span>${escapeHtml(item.type || "produção escrita")}</span></div>
+        <div class="meta-tags"><span>${escapeHtml(item.level || "N2")}</span><span>${escapeHtml(item.wordGoal || "100–150 palavras")}</span></div>
         <h3>${escapeHtml(item.title)}</h3>
         <p class="writing-prompt">${escapeHtml(item.prompt)}</p>
         <div class="checklist">
@@ -127,11 +167,11 @@
     return allObjective.find(q => q.id === id);
   }
 
-  function chooseVoice() {
+  function chooseVoice(lang = "en-US") {
     const voices = window.speechSynthesis?.getVoices?.() || [];
-    return voices.find(v => /^en-US/i.test(v.lang)) ||
-      voices.find(v => /^en-GB/i.test(v.lang)) ||
-      voices.find(v => /^en/i.test(v.lang)) || null;
+    const exact = voices.find(v => v.lang.toLowerCase() === lang.toLowerCase());
+    const family = voices.find(v => v.lang.toLowerCase().startsWith(lang.slice(0, 2).toLowerCase()));
+    return exact || family || null;
   }
 
   function playAudio(id) {
@@ -147,17 +187,18 @@
     }
 
     window.speechSynthesis.cancel();
+    const lang = q.lang || "en-US";
     const utterance = new SpeechSynthesisUtterance(q.text);
-    utterance.lang = "en-US";
-    utterance.rate = 0.92;
+    utterance.lang = lang;
+    utterance.rate = q.track === "challenge" ? 1.0 : q.track === "target" ? 0.96 : 0.92;
     utterance.pitch = 1;
     utterance.volume = 1;
-    const voice = chooseVoice();
+    const voice = chooseVoice(lang);
     if (voice) utterance.voice = voice;
 
     state.plays[id] = used + 1;
     const status = document.getElementById(`audio-status-${id}`);
-    status.textContent = `${state.plays[id]} de 2 reproduções`;
+    status.textContent = `${state.plays[id]} de 2 reproduções • ${lang}`;
     const button = document.querySelector(`[data-audio-id="${id}"]`);
     if (state.plays[id] >= 2) {
       button.textContent = "Limite atingido";
@@ -192,17 +233,23 @@
     if (!q || !Number.isInteger(selected) || !box) return;
 
     const isCorrect = selected === q.answer;
+    const transcript = q.text ? `
+      <details class="transcript">
+        <summary>Ver transcrição após responder</summary>
+        <p>${escapeHtml(q.text)}</p>
+      </details>` : "";
+
     box.className = `feedback ${isCorrect ? "success" : "error"}`;
     box.innerHTML = `
       <strong>${isCorrect ? "✓ Resposta correta" : `✗ Resposta correta: ${String.fromCharCode(65 + q.answer)}`}</strong>
       ${escapeHtml(q.explanation)}
+      ${transcript}
     `;
   }
 
   function answerQuestion(id, option) {
     const q = getQuestion(id);
     if (!q) return;
-
     if (state.mode === "training" && Number.isInteger(state.answers[id])) return;
     if (state.submittedSimulation) return;
 
@@ -217,11 +264,41 @@
     updateMetrics();
   }
 
+  function descriptorBreakdown(items) {
+    const groups = {};
+    items.forEach(q => {
+      const key = q.descriptor || q.category || "outros";
+      if (!groups[key]) groups[key] = {answered: 0, correct: 0};
+      if (Number.isInteger(state.answers[q.id])) {
+        groups[key].answered += 1;
+        if (state.answers[q.id] === q.answer) groups[key].correct += 1;
+      }
+    });
+
+    const rows = Object.entries(groups)
+      .filter(([, value]) => value.answered > 0)
+      .map(([name, value]) => ({name, ...value, pct: Math.round(value.correct / value.answered * 100)}))
+      .sort((a, b) => a.pct - b.pct || b.answered - a.answered);
+
+    if (!rows.length) return `<p class="empty-note">Responda algumas questões para gerar o diagnóstico por descritor.</p>`;
+
+    return `<div class="diagnostic-list">${rows.map(row => `
+      <div class="diagnostic-row">
+        <span>${escapeHtml(row.name)}</span>
+        <strong>${row.pct}%</strong>
+        <small>${row.correct}/${row.answered}</small>
+      </div>
+    `).join("")}</div>`;
+  }
+
   function renderResults() {
-    const caAnswered = getAnsweredCount(data.ca);
-    const caCorrect = getCorrectCount(data.ca);
-    const clAnswered = getAnsweredCount(data.cl);
-    const clCorrect = getCorrectCount(data.cl);
+    const caItems = visibleItems(data.ca);
+    const clItems = visibleItems(data.cl);
+    const active = [...caItems, ...clItems];
+    const caAnswered = getAnsweredCount(caItems);
+    const caCorrect = getCorrectCount(caItems);
+    const clAnswered = getAnsweredCount(clItems);
+    const clCorrect = getCorrectCount(clItems);
     const totalAnswered = caAnswered + clAnswered;
     const totalCorrect = caCorrect + clCorrect;
     const totalPct = totalAnswered ? Math.round(totalCorrect / totalAnswered * 100) : 0;
@@ -242,20 +319,25 @@
         ${card("Geral", totalCorrect, totalAnswered)}
       </div>
       <div class="result-detail">
+        <strong>Trilha:</strong> ${trackLabel()}<br>
         <strong>Tempo de estudo:</strong> ${formatTime(state.seconds)}<br>
-        <strong>Questões respondidas:</strong> ${totalAnswered} de ${allObjective.length}<br>
+        <strong>Questões respondidas:</strong> ${totalAnswered} de ${active.length}<br>
         <strong>Aproveitamento atual:</strong> ${totalPct}%<br><br>
         ${state.mode === "simulation" && !state.submittedSimulation
           ? "No modo Simulado, as respostas corretas permanecem ocultas até você finalizar."
-          : "Revise principalmente as questões erradas e identifique o gatilho: contraste, causa, sequência, ideia principal ou informação específica."}
+          : "Priorize os descritores com menor percentual. Na CA, volte à transcrição apenas depois de responder; na CL, localize no texto a evidência que confirma a alternativa."}
         <div style="margin-top:14px">${action}</div>
+      </div>
+      <div class="diagnostic-box">
+        <h3>Diagnóstico por descritor</h3>
+        ${descriptorBreakdown(active)}
       </div>
     `;
   }
 
   function finishSimulation() {
     state.submittedSimulation = true;
-    allObjective.forEach(q => {
+    activeObjective().forEach(q => {
       paintSelection(q.id);
       if (Number.isInteger(state.answers[q.id])) showFeedback(q.id);
       document.querySelectorAll(`[data-id="${q.id}"]`).forEach(btn => btn.disabled = true);
@@ -264,27 +346,8 @@
     renderResults();
   }
 
-  function setMode(mode) {
-    if (Object.keys(state.answers).length > 0 && mode !== state.mode) {
-      const ok = window.confirm("Trocar de modo reiniciará suas respostas. Continuar?");
-      if (!ok) {
-        el.modeSelect.value = state.mode;
-        return;
-      }
-      resetSession(false);
-    }
-
-    state.mode = mode;
-    state.submittedSimulation = false;
-    el.modeHelp.textContent = mode === "training"
-      ? "No treino, a correção aparece após cada resposta."
-      : "No simulado, a correção aparece somente ao finalizar.";
-    updateMetrics();
-    renderResults();
-  }
-
   function resetSession(confirmReset = true) {
-    if (confirmReset && !window.confirm("Reiniciar respostas, áudios e cronômetro desta sessão?")) return;
+    if (confirmReset && !window.confirm("Reiniciar respostas, áudios e cronômetro desta sessão?")) return false;
     window.speechSynthesis?.cancel?.();
     state.answers = {};
     state.plays = {};
@@ -294,6 +357,58 @@
     renderCA();
     renderCL();
     renderEE();
+    renderResults();
+    updateMetrics();
+    return true;
+  }
+
+  function setMode(mode) {
+    if (Object.keys(state.answers).length > 0 && mode !== state.mode) {
+      const ok = window.confirm("Trocar de modo reiniciará suas respostas. Continuar?");
+      if (!ok) {
+        el.modeSelect.value = state.mode;
+        return;
+      }
+      state.answers = {};
+      state.plays = {};
+      state.seconds = 0;
+    }
+
+    state.mode = mode;
+    state.submittedSimulation = false;
+    el.modeHelp.textContent = mode === "training"
+      ? "No treino, a correção aparece após cada resposta."
+      : "No simulado, a correção aparece somente ao finalizar.";
+    renderCA();
+    renderCL();
+    renderResults();
+    updateMetrics();
+  }
+
+  function setTrack(track) {
+    if (Object.keys(state.answers).length > 0 && track !== state.track) {
+      const ok = window.confirm("Trocar de trilha reiniciará suas respostas desta sessão. Continuar?");
+      if (!ok) {
+        el.trackSelect.value = state.track;
+        return;
+      }
+    }
+
+    window.speechSynthesis?.cancel?.();
+    state.track = track;
+    state.answers = {};
+    state.plays = {};
+    state.seconds = 0;
+    state.submittedSimulation = false;
+    el.timer.textContent = "00:00";
+    el.trackHelp.textContent = ({
+      base: "Questões diretas para consolidar compreensão funcional B1.",
+      target: "Prioriza tarefas de dificuldade próxima ao objetivo 222.",
+      challenge: "Inferência, atitude e coesão em nível acima do alvo.",
+      all: "Exibe todo o banco: Base, Alvo N2 e Desafio."
+    })[track];
+    renderCA();
+    renderCL();
     renderResults();
     updateMetrics();
   }
@@ -333,6 +448,7 @@
   });
 
   el.modeSelect.addEventListener("change", () => setMode(el.modeSelect.value));
+  el.trackSelect.addEventListener("change", () => setTrack(el.trackSelect.value));
   el.resetBtn.addEventListener("click", () => resetSession(true));
 
   renderCA();
