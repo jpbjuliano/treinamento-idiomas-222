@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Treinamento online para revisão de Compreensão Auditiva, Compreensão Leitora e Expressão Escrita - objetivo IPL 2-1-2-2.">
+  <title>Exercícios | Treinamento Idiomas</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/v2.css?v=20260915-7">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">222</div>
+      <div>
+        <strong>Treinamento Idiomas</strong>
+        <span>CA • CL • EE</span>
+      </div>
+    </div>
+    <div class="top-actions">
+      <a class="ghost-btn" href="index.html" style="text-decoration:none">← Estratégia</a>
+      <span id="timer" class="timer">00:00</span>
+      <button id="resetBtn" class="ghost-btn" type="button">Reiniciar</button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Revisão direcionada</p>
+        <h1>Treinamento para IPL 2-1-2-2</h1>
+        <p class="lead">Banco original de exercícios organizado por habilidade, descritor e faixa de dificuldade. A rota principal prioriza CA N2, CL N2 e EE N2.</p>
+        <div class="track-legend" aria-label="Faixas de treinamento">
+          <span><b>Base</b> B1</span>
+          <span><b>Alvo N2</b> B1–B2</span>
+          <span><b>Desafio</b> B2–C1</span>
+        </div>
+      </div>
+      <div class="mode-card">
+        <label for="modeSelect">Modo</label>
+        <select id="modeSelect">
+          <option value="training">Treino</option>
+          <option value="simulation">Simulado</option>
+        </select>
+        <small id="modeHelp">No treino, a correção aparece após cada resposta.</small>
+
+        <label for="trackSelect" class="secondary-label">Trilha</label>
+        <select id="trackSelect">
+          <option value="target" selected>Alvo N2</option>
+          <option value="base">Base B1</option>
+          <option value="challenge">Desafio B2–C1</option>
+          <option value="all">Banco completo</option>
+        </select>
+        <small id="trackHelp">Prioriza tarefas de dificuldade próxima ao objetivo N2.</small>
+      </div>
+    </section>
+
+    <section class="knowledge-framework" aria-labelledby="frameworkTitle">
+      <div class="framework-heading">
+        <div>
+          <p class="eyebrow">Framework do conhecimento</p>
+          <h2 id="frameworkTitle">Como a trilha deve funcionar</h2>
+          <p><strong>Base B1</strong> para consolidar fundamentos → <strong>Alvo N2</strong> como foco principal → <strong>Desafio B2–C1</strong> para aumentar a margem de segurança. Use o diagnóstico por descritor para decidir quando reforçar ou avançar.</p>
+        </div>
+        <span class="framework-badge">rota principal: Alvo N2</span>
+      </div>
+    </section>
+
+    <section class="dashboard" aria-label="Resumo do progresso">
+      <article class="metric"><span>Questões</span><strong id="metricQuestions">0</strong></article>
+      <article class="metric"><span>Acertos</span><strong id="metricCorrect">0</strong></article>
+      <article class="metric"><span>Aproveitamento</span><strong id="metricPercent">0%</strong></article>
+      <article class="metric"><span>Habilidade atual</span><strong id="metricSkill">CA</strong></article>
+    </section>
+
+    <nav class="tabs" aria-label="Habilidades">
+      <button class="tab active" data-tab="ca" type="button">🎧 CA</button>
+      <button class="tab" data-tab="cl" type="button">📖 CL</button>
+      <button class="tab" data-tab="ee" type="button">✍️ EE</button>
+      <button class="tab" data-tab="resultado" type="button">📊 Resultado</button>
+    </nav>
+
+    <section id="ca" class="panel active-panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">Compreensão Auditiva</p>
+          <h2>Ouça, identifique o sentido e descarte os distratores.</h2>
+          <p class="panel-note">Treino de ideia principal, detalhe, finalidade, atitude, contraste, sequência e inferência.</p>
+        </div>
+        <span class="pill">máx. 2 reproduções</span>
+      </div>
+      <div id="caContent"></div>
+    </section>
+
+    <section id="cl" class="panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">Compreensão Leitora</p>
+          <h2>Leia a pergunta primeiro e localize a evidência no texto.</h2>
+          <p class="panel-note">Treino de mensagens curtas, textos longos, vocabulário em contexto, intenção e inferência.</p>
+        </div>
+        <span class="pill">evidência + inferência</span>
+      </div>
+      <div id="clContent"></div>
+    </section>
+
+    <section id="ee" class="panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">Expressão Escrita</p>
+          <h2>Produza textos claros, organizados e adequados à situação.</h2>
+          <p class="panel-note">Pratique e-mail, relato, opinião, resumo e instruções com checklist antes de revisar.</p>
+        </div>
+        <span class="pill">produção guiada</span>
+      </div>
+      <div id="eeContent"></div>
+    </section>
+
+    <section id="resultado" class="panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">Resultado</p>
+          <h2>Seu desempenho nesta sessão</h2>
+          <p class="panel-note">Use o diagnóstico por descritor para decidir o que revisar em seguida.</p>
+        </div>
+      </div>
+      <div id="resultContent"></div>
+    </section>
+  </main>
+
+  <footer>
+    Material independente de estudo. Os exercícios são autorais e inspirados em formatos públicos de avaliação de proficiência.
+  </footer>
+
+  <script src="data/questions.js"></script>
+  <script src="data/ca-v2.js"></script>
+  <script src="data/cl-v2.js"></script>
+  <script src="data/ee-v2.js"></script>
+  <script src="assets/js/app.js?v=20260915-8"></script>
+  <script src="assets/js/visual-support.js?v=20260915-7"></script>
+</body>
+</html>
