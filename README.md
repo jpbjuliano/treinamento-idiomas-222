@@ -8,7 +8,7 @@ Aplicação web estática para revisão de inglês com foco em:
 
 O projeto foi criado para revisão direcionada ao objetivo **222**, com exercícios autorais e organização por habilidade, descritor e dificuldade.
 
-> Importante: B1, B2 e C1 são usados apenas como referências pedagógicas de formato e dificuldade. O projeto não afirma equivalência automática entre níveis Cambridge e os índices de proficiência do Exército. A referência principal para a preparação deve continuar sendo a documentação e as orientações oficiais do CIdEx/Exército Brasileiro.
+> B1, B2 e C1 são usados apenas como referências pedagógicas de formato e dificuldade. O projeto não afirma equivalência automática entre diferentes escalas de proficiência.
 
 ## V2 — estrutura de treinamento
 
@@ -146,4 +146,4 @@ Endereço esperado:
 - modelos de correção guiada para EE;
 - novos blocos de questões separados por tema e dificuldade.
 
-> Material independente de estudo. Não substitui normas, descritores ou orientações oficiais do CIdEx/Exército Brasileiro.
+> Material independente de estudo, desenvolvido para prática e revisão de inglês.
