@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Treinamento online para revisão de Compreensão Auditiva, Compreensão Leitora e Expressão Escrita - nível 222.">
+  <title>Treinamento Idiomas 222</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">222</div>
+      <div>
+        <strong>Treinamento Idiomas</strong>
+        <span>CA • CL • EE</span>
+      </div>
+    </div>
+    <div class="top-actions">
+      <span id="timer" class="timer">00:00</span>
+      <button id="resetBtn" class="ghost-btn" type="button">Reiniciar</button>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Revisão direcionada</p>
+        <h1>Treinamento para nível 222</h1>
+        <p class="lead">Pratique compreensão auditiva, leitura e expressão escrita em um ambiente simples, rápido e focado em prova.</p>
+      </div>
+      <div class="mode-card">
+        <label for="modeSelect">Modo</label>
+        <select id="modeSelect">
+          <option value="training">Treino</option>
+          <option value="simulation">Simulado</option>
+        </select>
+        <small id="modeHelp">No treino, a correção aparece após cada resposta.</small>
+      </div>
+    </section>
+
+    <section class="dashboard" aria-label="Resumo do progresso">
+      <article class="metric"><span>Questões</span><strong id="metricQuestions">0</strong></article>
+      <article class="metric"><span>Acertos</span><strong id="metricCorrect">0</strong></article>
+      <article class="metric"><span>Aproveitamento</span><strong id="metricPercent">0%</strong></article>
+      <article class="metric"><span>Habilidade atual</span><strong id="metricSkill">CA</strong></article>
+    </section>
+
+    <nav class="tabs" aria-label="Habilidades">
+      <button class="tab active" data-tab="ca" type="button">🎧 CA</button>
+      <button class="tab" data-tab="cl" type="button">📖 CL</button>
+      <button class="tab" data-tab="ee" type="button">✍️ EE</button>
+      <button class="tab" data-tab="resultado" type="button">📊 Resultado</button>
+    </nav>
+
+    <section id="ca" class="panel active-panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">Compreensão Auditiva</p>
+          <h2>Ouça, identifique a ideia central e marque a resposta.</h2>
+        </div>
+        <span class="pill">máx. 2 reproduções</span>
+      </div>
+      <div id="caContent"></div>
+    </section>
+
+    <section id="cl" class="panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">Compreensão Leitora</p>
+          <h2>Leia a pergunta primeiro e depois localize a informação no texto.</h2>
+        </div>
+        <span class="pill">foco em informação + inferência</span>
+      </div>
+      <div id="clContent"></div>
+    </section>
+
+    <section id="ee" class="panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">Expressão Escrita</p>
+          <h2>Produza textos claros, organizados e adequados à situação.</h2>
+        </div>
+        <span class="pill">meta de treino: 100–150 palavras</span>
+      </div>
+      <div id="eeContent"></div>
+    </section>
+
+    <section id="resultado" class="panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">Resultado</p>
+          <h2>Seu desempenho nesta sessão</h2>
+        </div>
+      </div>
+      <div id="resultContent"></div>
+    </section>
+  </main>
+
+  <footer>
+    Material de estudo independente. Não substitui orientações oficiais do CIdEx/Exército Brasileiro.
+  </footer>
+
+  <script src="data/questions.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
