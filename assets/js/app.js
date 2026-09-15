@@ -6,7 +6,9 @@
     answers: {},
     plays: {},
     seconds: 0,
-    submittedSimulation: false
+    submittedSimulation: false,
+    questionOrder: { ca: [], cl: [], ee: [] },
+    optionOrder: {}
   };
 
   const el = {
@@ -37,18 +39,45 @@
       .replaceAll("'", "&#039;");
   }
 
+  function shuffleArray(values) {
+    const shuffled = [...values];
+    for (let i = shuffled.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  }
+
+  function resetQuestionOrder() {
+    state.questionOrder = {
+      ca: shuffleArray(data.ca.map(q => q.id)),
+      cl: shuffleArray(data.cl.map(q => q.id)),
+      ee: shuffleArray(data.ee.map(q => q.id))
+    };
+    state.optionOrder = {};
+  }
+
+  function orderedItems(items, skill) {
+    const order = state.questionOrder[skill] || [];
+    const byId = new Map(items.map(item => [item.id, item]));
+    const ordered = order.map(id => byId.get(id)).filter(Boolean);
+    const included = new Set(ordered.map(item => item.id));
+    return [...ordered, ...items.filter(item => !included.has(item.id))];
+  }
+
   function formatTime(total) {
     const min = String(Math.floor(total / 60)).padStart(2, "0");
     const sec = String(total % 60).padStart(2, "0");
     return `${min}:${sec}`;
   }
 
-  function visibleItems(items) {
-    return state.track === "all" ? items : items.filter(q => (q.track || "target") === state.track);
+  function visibleItems(items, skill) {
+    const ordered = orderedItems(items, skill);
+    return state.track === "all" ? ordered : ordered.filter(q => (q.track || "target") === state.track);
   }
 
   function activeObjective() {
-    return [...visibleItems(data.ca), ...visibleItems(data.cl)];
+    return [...visibleItems(data.ca, "ca"), ...visibleItems(data.cl, "cl")];
   }
 
   function trackLabel(track = state.track) {
@@ -93,10 +122,22 @@
     return q.reference ? `<div class="reference-line">Formato de referência: ${escapeHtml(q.reference)}</div>` : "";
   }
 
+  function optionIndices(q) {
+    const indices = q.options.map((_, idx) => idx);
+    if (state.mode !== "simulation") return indices;
+    if (!state.optionOrder[q.id]) state.optionOrder[q.id] = shuffleArray(indices);
+    return state.optionOrder[q.id];
+  }
+
+  function displayLetterForOption(q, originalIndex) {
+    const position = optionIndices(q).indexOf(originalIndex);
+    return String.fromCharCode(65 + Math.max(position, 0));
+  }
+
   function buildOptions(q, skill) {
-    return q.options.map((option, idx) => `
-      <button class="option-btn" type="button" data-skill="${skill}" data-id="${q.id}" data-option="${idx}">
-        <strong>${String.fromCharCode(65 + idx)})</strong> ${escapeHtml(option)}
+    return optionIndices(q).map((originalIdx, displayIdx) => `
+      <button class="option-btn" type="button" data-skill="${skill}" data-id="${q.id}" data-option="${originalIdx}">
+        <strong>${String.fromCharCode(65 + displayIdx)})</strong> ${escapeHtml(q.options[originalIdx])}
       </button>
     `).join("");
   }
@@ -111,7 +152,7 @@
   }
 
   function renderCA() {
-    const items = visibleItems(data.ca);
+    const items = visibleItems(data.ca, "ca");
     el.caContent.innerHTML = renderBankHeader("CA", items.length, data.ca.length) + items.map((q, index) => `
       <article class="question-card" id="card-${q.id}">
         <div class="question-meta"><span>Questão ${index + 1}</span><span>${escapeHtml(q.category)}</span></div>
@@ -129,7 +170,7 @@
   }
 
   function renderCL() {
-    const items = visibleItems(data.cl);
+    const items = visibleItems(data.cl, "cl");
     el.clContent.innerHTML = renderBankHeader("CL", items.length, data.cl.length) + items.map((q, index) => `
       <article class="reading-card" id="card-${q.id}">
         <div class="question-meta"><span>Questão ${index + 1}</span><span>${escapeHtml(q.category)}</span></div>
@@ -144,7 +185,8 @@
   }
 
   function renderEE() {
-    el.eeContent.innerHTML = data.ee.map((item, index) => `
+    const items = orderedItems(data.ee, "ee");
+    el.eeContent.innerHTML = items.map((item, index) => `
       <article class="writing-card">
         <div class="question-meta"><span>Proposta ${index + 1}</span><span>${escapeHtml(item.type || "produção escrita")}</span></div>
         <div class="meta-tags"><span>${escapeHtml(item.level || "N2")}</span><span>${escapeHtml(item.wordGoal || "100–150 palavras")}</span></div>
@@ -190,7 +232,7 @@
     const lang = q.lang || "en-US";
     const utterance = new SpeechSynthesisUtterance(q.text);
     utterance.lang = lang;
-    utterance.rate = q.track === "challenge" ? 1.0 : q.track === "target" ? 0.96 : 0.92;
+    utterance.rate = q.audioRate ?? (q.track === "challenge" ? 0.97 : q.track === "target" ? 0.89 : 0.85);
     utterance.pitch = 1;
     utterance.volume = 1;
     const voice = chooseVoice(lang);
@@ -241,7 +283,7 @@
 
     box.className = `feedback ${isCorrect ? "success" : "error"}`;
     box.innerHTML = `
-      <strong>${isCorrect ? "✓ Resposta correta" : `✗ Resposta correta: ${String.fromCharCode(65 + q.answer)}`}</strong>
+      <strong>${isCorrect ? "✓ Resposta correta" : `✗ Resposta correta: ${displayLetterForOption(q, q.answer)}`}</strong>
       ${escapeHtml(q.explanation)}
       ${transcript}
     `;
@@ -292,8 +334,8 @@
   }
 
   function renderResults() {
-    const caItems = visibleItems(data.ca);
-    const clItems = visibleItems(data.cl);
+    const caItems = visibleItems(data.ca, "ca");
+    const clItems = visibleItems(data.cl, "cl");
     const active = [...caItems, ...clItems];
     const caAnswered = getAnsweredCount(caItems);
     const caCorrect = getCorrectCount(caItems);
@@ -347,12 +389,13 @@
   }
 
   function resetSession(confirmReset = true) {
-    if (confirmReset && !window.confirm("Reiniciar respostas, áudios e cronômetro desta sessão?")) return false;
+    if (confirmReset && !window.confirm("Reiniciar a sessão e embaralhar novamente as questões?")) return false;
     window.speechSynthesis?.cancel?.();
     state.answers = {};
     state.plays = {};
     state.seconds = 0;
     state.submittedSimulation = false;
+    resetQuestionOrder();
     el.timer.textContent = "00:00";
     renderCA();
     renderCL();
@@ -364,30 +407,38 @@
 
   function setMode(mode) {
     if (Object.keys(state.answers).length > 0 && mode !== state.mode) {
-      const ok = window.confirm("Trocar de modo reiniciará suas respostas. Continuar?");
+      const ok = window.confirm("Trocar de modo reiniciará suas respostas e embaralhará uma nova sessão. Continuar?");
       if (!ok) {
         el.modeSelect.value = state.mode;
         return;
       }
+    }
+
+    if (mode !== state.mode) {
       state.answers = {};
       state.plays = {};
       state.seconds = 0;
+      resetQuestionOrder();
+    } else {
+      state.optionOrder = {};
     }
 
     state.mode = mode;
     state.submittedSimulation = false;
+    el.timer.textContent = "00:00";
     el.modeHelp.textContent = mode === "training"
       ? "No treino, a correção aparece após cada resposta."
-      : "No simulado, a correção aparece somente ao finalizar.";
+      : "No simulado, questões e alternativas ficam randomizadas e a correção aparece somente ao finalizar.";
     renderCA();
     renderCL();
+    renderEE();
     renderResults();
     updateMetrics();
   }
 
   function setTrack(track) {
     if (Object.keys(state.answers).length > 0 && track !== state.track) {
-      const ok = window.confirm("Trocar de trilha reiniciará suas respostas desta sessão. Continuar?");
+      const ok = window.confirm("Trocar de trilha reiniciará suas respostas e embaralhará uma nova sessão. Continuar?");
       if (!ok) {
         el.trackSelect.value = state.track;
         return;
@@ -400,6 +451,7 @@
     state.plays = {};
     state.seconds = 0;
     state.submittedSimulation = false;
+    resetQuestionOrder();
     el.timer.textContent = "00:00";
     el.trackHelp.textContent = ({
       base: "Questões diretas para consolidar compreensão funcional B1.",
@@ -409,6 +461,7 @@
     })[track];
     renderCA();
     renderCL();
+    renderEE();
     renderResults();
     updateMetrics();
   }
@@ -451,6 +504,7 @@
   el.trackSelect.addEventListener("change", () => setTrack(el.trackSelect.value));
   el.resetBtn.addEventListener("click", () => resetSession(true));
 
+  resetQuestionOrder();
   renderCA();
   renderCL();
   renderEE();
