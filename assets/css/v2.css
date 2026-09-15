@@ -20,14 +20,12 @@
 .diagnostic-row small{color:var(--muted);min-width:34px;text-align:right}
 .empty-note{margin:0;color:var(--muted)}
 
-.knowledge-framework{margin:20px 0 18px;padding:26px;border:1px solid var(--border);border-radius:24px;background:radial-gradient(circle at 15% 0%,rgba(90,162,255,.1),transparent 30%),rgba(17,26,43,.92);box-shadow:var(--shadow)}
-.framework-heading{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:18px}
-.framework-heading h2{margin-bottom:8px;font-size:clamp(1.45rem,2.5vw,2rem)}
+.knowledge-framework{margin:20px 0 18px;padding:22px 24px;border:1px solid var(--border);border-radius:20px;background:radial-gradient(circle at 15% 0%,rgba(90,162,255,.08),transparent 30%),rgba(17,26,43,.92);box-shadow:var(--shadow)}
+.framework-heading{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin:0}
+.framework-heading h2{margin-bottom:8px;font-size:clamp(1.35rem,2.3vw,1.8rem)}
 .framework-heading p:last-child{margin:0;max-width:780px;color:var(--muted);line-height:1.65}
-.framework-badge{white-space:nowrap;padding:9px 12px;border-radius:999px;border:1px solid rgba(125,211,252,.32);background:rgba(125,211,252,.08);color:var(--accent-2);font-size:.78rem;font-weight:800}
-.framework-figure{margin:0;padding:14px;border:1px solid var(--border);border-radius:20px;background:#09131f}
-.framework-figure img{display:block;width:100%;height:auto;border-radius:14px;border:1px solid rgba(109,179,255,.18);box-shadow:0 18px 38px rgba(0,0,0,.22)}
-.framework-figure figcaption{margin:12px 4px 2px;color:var(--muted);font-size:.82rem;line-height:1.55;text-align:center}
+.framework-heading p strong{color:#dce7f7}
+.framework-badge{white-space:nowrap;padding:8px 11px;border-radius:999px;border:1px solid rgba(125,211,252,.32);background:rgba(125,211,252,.08);color:var(--accent-2);font-size:.76rem;font-weight:800}
 
-@media (max-width:700px){.framework-heading{flex-direction:column}.framework-badge{white-space:normal}.knowledge-framework{padding:16px}.framework-figure{padding:8px}}
+@media (max-width:700px){.framework-heading{flex-direction:column}.framework-badge{white-space:normal}.knowledge-framework{padding:16px}}
 @media (max-width:620px){.bank-summary{align-items:flex-start;flex-direction:column}.diagnostic-row{grid-template-columns:minmax(0,1fr) auto}.diagnostic-row small{grid-column:2}.track-legend span{font-size:.76rem}}
