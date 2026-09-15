@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Painel de expressões frequentes e úteis para preparação no nível B1, com filtros e acompanhamento de revisão.">
+  <title>Expressões B1 | Treinamento Idiomas</title>
+  <link rel="stylesheet" href="assets/css/expressoes-b1.css?v=20260915-1">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Voltar para a página inicial">
+      <div class="brand-mark">B1</div>
+      <div>
+        <strong>Treinamento Idiomas</strong>
+        <span>Painel de expressões — N2 / B1</span>
+      </div>
+    </a>
+    <nav class="top-actions" aria-label="Navegação principal">
+      <a class="top-link" href="index.html">← Início</a>
+      <a class="top-link primary" href="exercicios.html">Exercícios →</a>
+    </nav>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Revisão direcionada</p>
+        <h1>Expressões essenciais para o B1</h1>
+        <p class="lead">Reconheça blocos de linguagem que aparecem com frequência em situações de nível B1. O objetivo é ganhar velocidade em <strong>Listening</strong> e <strong>Reading</strong> e reutilizar estruturas seguras em <strong>Writing</strong>.</p>
+        <div class="hero-tags" aria-label="Áreas de aplicação">
+          <span>🎧 Listening</span>
+          <span>📖 Reading</span>
+          <span>✍️ Writing</span>
+          <span>🧠 Paráfrases</span>
+        </div>
+      </div>
+      <aside class="focus-box">
+        <span class="focus-label">Como usar</span>
+        <ol>
+          <li>Filtre por categoria ou prioridade.</li>
+          <li>Leia a expressão e o exemplo.</li>
+          <li>Marque seu domínio.</li>
+          <li>Revise primeiro os itens em dúvida.</li>
+        </ol>
+      </aside>
+    </section>
+
+    <section class="stats" aria-label="Resumo do progresso">
+      <article class="stat-card">
+        <span>Total</span>
+        <strong id="statTotal">0</strong>
+        <small>expressões</small>
+      </article>
+      <article class="stat-card known">
+        <span>Conheço</span>
+        <strong id="statKnown">0</strong>
+        <small id="statKnownPct">0%</small>
+      </article>
+      <article class="stat-card doubt">
+        <span>Tenho dúvida</span>
+        <strong id="statDoubt">0</strong>
+        <small>revisar</small>
+      </article>
+      <article class="stat-card review">
+        <span>Preciso revisar</span>
+        <strong id="statReview">0</strong>
+        <small>prioridade</small>
+      </article>
+    </section>
+
+    <section class="control-panel" aria-labelledby="filtersTitle">
+      <div class="control-heading">
+        <div>
+          <p class="eyebrow">Filtros</p>
+          <h2 id="filtersTitle">Encontre rapidamente o que precisa estudar</h2>
+        </div>
+        <button class="reset-button" id="resetProgress" type="button">Limpar progresso</button>
+      </div>
+
+      <div class="search-row">
+        <label class="search-box">
+          <span>Buscar</span>
+          <input id="searchInput" type="search" placeholder="Ex.: however, sugestão, voltar, dúvida..." autocomplete="off">
+        </label>
+        <label class="select-box">
+          <span>Prioridade</span>
+          <select id="priorityFilter">
+            <option value="all">Todas</option>
+            <option value="essential">Essencial</option>
+            <option value="very-common">Muito comum</option>
+            <option value="common">Comum</option>
+          </select>
+        </label>
+        <label class="select-box">
+          <span>Meu status</span>
+          <select id="statusFilter">
+            <option value="all">Todos</option>
+            <option value="known">Conheço</option>
+            <option value="doubt">Tenho dúvida</option>
+            <option value="review">Preciso revisar</option>
+            <option value="unmarked">Não marcado</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="category-filter" id="categoryFilter" aria-label="Categorias de expressão"></div>
+    </section>
+
+    <section class="study-note">
+      <strong>Estratégia de prova:</strong> não memorize apenas a tradução. Tente reconhecer a <em>função</em> da expressão: contraste, mudança de plano, opinião, pedido, conclusão, causa ou resultado. Em Listening e Reading, essa função frequentemente ajuda a separar a resposta correta dos distratores.
+    </section>
+
+    <section class="results-heading">
+      <div>
+        <p class="eyebrow">Banco de revisão</p>
+        <h2>Expressões e paráfrases</h2>
+      </div>
+      <span id="resultCount" class="result-count">0 itens</span>
+    </section>
+
+    <section id="expressionGrid" class="expression-grid" aria-live="polite"></section>
+
+    <div id="emptyState" class="empty-state" hidden>
+      <strong>Nenhuma expressão encontrada.</strong>
+      <span>Tente remover algum filtro ou usar outro termo de busca.</span>
+    </div>
+
+    <section class="legend" aria-labelledby="legendTitle">
+      <div>
+        <p class="eyebrow">Legenda</p>
+        <h2 id="legendTitle">Prioridade de revisão</h2>
+      </div>
+      <div class="legend-grid">
+        <article><span class="priority essential">Essencial</span><p>Estruturas de alta utilidade para compreender intenção, contraste, causa, opinião, pedido e mudança de plano.</p></article>
+        <article><span class="priority very-common">Muito comum</span><p>Expressões recorrentes no inglês cotidiano de nível B1 e úteis para reconhecer paráfrases.</p></article>
+        <article><span class="priority common">Comum</span><p>Itens importantes para ampliar repertório e reduzir dependência de tradução palavra por palavra.</p></article>
+      </div>
+    </section>
+
+    <section class="source-note">
+      <strong>Nota pedagógica:</strong> o painel organiza expressões de alta utilidade para o nível B1. A classificação de prioridade é uma orientação de estudo do projeto, não uma contagem estatística oficial de incidência em provas.
+    </section>
+  </main>
+
+  <footer>
+    Treinamento Idiomas • Preparação N2 / B1 • Progresso salvo localmente neste navegador
+  </footer>
+
+  <script src="assets/js/expressoes-b1.js?v=20260915-1"></script>
+</body>
+</html>
