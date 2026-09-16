@@ -5,7 +5,7 @@ Formato: completar várias frases escolhendo opções de um mesmo banco, usando 
 ## Estratégia
 
 1. Leia primeiro todas as opções e todas as frases.
-2. Resolva as combinações mais óbvlias (collocations) primeiro.
+2. Resolva as combinações mais óbvias (collocations) primeiro.
 3. Marque mentalmente ou risque cada opção já usada.
 4. Use pistas gramaticais para as frases ainda ambíguas.
 5. Deixe pares parecidos para o final e faça uma conferência global.
