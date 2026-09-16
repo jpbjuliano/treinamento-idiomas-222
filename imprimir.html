@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Gerador de banco de questões imprimível para treinamento N2/B1.">
+  <title>Imprimir banco de questões | Treinamento Idiomas</title>
+  <link rel="stylesheet" href="assets/css/print-bank.css?v=20260916-1">
+</head>
+<body>
+  <header class="screen-bar">
+    <a href="exercicios.html">← Voltar para Treinar</a>
+    <strong>🖨️ Banco imprimível • N2 / B1</strong>
+  </header>
+
+  <section class="controls" aria-label="Configuração da impressão">
+    <h1>Monte a folha que deseja imprimir</h1>
+    <p>O conteúdo é gerado no navegador. Nenhum nome, resposta ou seleção do aluno é enviado para servidor.</p>
+
+    <div class="control-group">
+      <label>Habilidades</label>
+      <label class="checkline"><input id="skillCA" type="checkbox" checked> 🎧 CA</label>
+      <label class="checkline"><input id="skillCL" type="checkbox" checked> 📖 CL</label>
+      <label class="checkline"><input id="skillEE" type="checkbox"> ✍️ EE</label>
+    </div>
+
+    <div class="control-group">
+      <label for="quantity">Quantidade por habilidade</label>
+      <select id="quantity"><option value="5">5 questões</option><option value="10" selected>10 questões</option><option value="all">Banco completo</option></select>
+    </div>
+
+    <div class="control-group">
+      <label for="version">Versão</label>
+      <select id="version"><option value="A">Prova A</option><option value="B">Prova B</option></select>
+      <label class="checkline"><input id="visualMode" type="checkbox" checked> 💡 Modo revisão visual</label>
+    </div>
+
+    <div class="control-group">
+      <label>Material do instrutor</label>
+      <label class="checkline"><input id="includeKey" type="checkbox"> ✅ Incluir gabarito</label>
+      <span class="screen-note">Em CA, o gabarito também inclui o roteiro que pode ser lido pelo instrutor.</span>
+    </div>
+
+    <div class="actions">
+      <button id="generateBtn" class="action-btn" type="button">Atualizar folha</button>
+      <button id="printBtn" class="action-btn primary" type="button">🖨️ Imprimir / Salvar PDF</button>
+    </div>
+  </section>
+
+  <main id="sheet" class="sheet" aria-live="polite"></main>
+
+  <script src="data/questions.js"></script>
+  <script src="data/ca-v2.js"></script>
+  <script src="data/cl-v2.js"></script>
+  <script src="data/ee-v2.js"></script>
+  <script src="assets/js/print-bank.js?v=20260916-1"></script>
+</body>
+</html>
